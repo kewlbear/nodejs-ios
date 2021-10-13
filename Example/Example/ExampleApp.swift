@@ -1,3 +1,7 @@
+//
+//  ExampleApp.swift
+//  Example
+//
 //  Copyright (c) 2021 Changbeom Ahn
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,20 +23,26 @@
 //  THE SOFTWARE.
 //
 
-import NodeMobile
-import Foundation
+import SwiftUI
+import nodejs_ios
 
-public class NodeRunner: NSObject {
-    @objc
-    public static func startEngine(arguments: [String]) {
-        var argv = arguments.map { strdup($0) }
-        node_start(Int32(arguments.count), &argv)
+@main
+struct ExampleApp: App {
+    let nodeQueue = DispatchQueue(label: "node.js")
+    
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
     }
-}
-
-public struct nodejs_ios {
-    public private(set) var text = "Hello, World!"
-
-    public init() {
+    
+    init() {
+        let srcPath = Bundle.main.path(forResource: "nodejs-project/main.js", ofType: "")
+        nodeQueue.async {
+            NodeRunner.startEngine(arguments: [
+                "node",
+                srcPath!,
+            ])
+        }
     }
 }

@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "nodejs-ios",
+        "repositoryURL": "https://github.com/kewlbear/nodejs-ios.git",
+        "state": {
+          "branch": "main",
+          "revision": "28b3a6fc90f069ca703199b7bb35a371a7696465",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

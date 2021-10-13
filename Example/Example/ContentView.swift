@@ -1,3 +1,7 @@
+//
+//  ContentView.swift
+//  Example
+//
 //  Copyright (c) 2021 Changbeom Ahn
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,20 +23,32 @@
 //  THE SOFTWARE.
 //
 
-import NodeMobile
-import Foundation
+import SwiftUI
 
-public class NodeRunner: NSObject {
-    @objc
-    public static func startEngine(arguments: [String]) {
-        var argv = arguments.map { strdup($0) }
-        node_start(Int32(arguments.count), &argv)
+struct ContentView: View {
+    @State var info = ""
+    
+    var body: some View {
+        VStack {
+            Text(info)
+                .padding()
+            
+            Button {
+                do {
+                    let data = try Data(contentsOf: URL(string: "http://127.0.0.1:3000")!)
+                    info = String(data: data, encoding: .utf8) ?? "not UTF-8?"
+                } catch {
+                    info = error.localizedDescription
+                }
+            } label: {
+                Text("Submit")
+            }
+        }
     }
 }
 
-public struct nodejs_ios {
-    public private(set) var text = "Hello, World!"
-
-    public init() {
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
     }
 }
